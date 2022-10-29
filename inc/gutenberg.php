@@ -35,3 +35,12 @@ function gutenberg_default_colors()
 }
 
 add_action('init', 'gutenberg_default_colors');
+
+function register_gutenberg()
+{
+    wp_register_script('custom-cta-block', get_template_directory_uri() . '/js/gutenberg-cta.js', ['wp-blocks']);
+    register_block_type('uzair/custom-cta', [
+        'editor_script' => 'custom-cta-block'
+    ]);
+}
+add_action('init', 'register_gutenberg');
