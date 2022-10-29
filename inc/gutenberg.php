@@ -19,6 +19,19 @@ function gutenberg_default_colors()
             'color' => 'red'
         ],
     ]);
+
+    add_theme_support('editor-font-sizes', [
+        [
+            'name' => 'Normal',
+            'slug' => 'normal',
+            'size' => 16,
+        ],
+        [
+            'name' => 'Large',
+            'slug' => 'large',
+            'size' => 24,
+        ]
+    ]);
 }
 
 add_action('init', 'gutenberg_default_colors');
