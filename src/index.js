@@ -11,6 +11,8 @@ registerBlockType("uzair/custom-cta", {
   // custom functions
 
   // built-in functions
-  edit() {},
+  edit() {
+    return <div>no</div>;
+  },
   save() {},
 });
