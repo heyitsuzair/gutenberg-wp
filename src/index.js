@@ -1,7 +1,7 @@
 const { registerBlockType } = wp.blocks;
 const { RichText, InspectorControls, ColorPalette, MediaUpload } =
   wp.blockEditor;
-const { PanelBody, Button } = wp.components;
+const { PanelBody, Button, RangeControl } = wp.components;
 
 registerBlockType("uzair/custom-cta", {
   // built-in attributes
@@ -33,12 +33,28 @@ registerBlockType("uzair/custom-cta", {
       type: "string",
       default: null,
     },
+    overlayColor: {
+      type: "string",
+      default: "black",
+    },
+    overlayOpacity: {
+      type: "number",
+      default: 0.3,
+    },
   },
   // custom functions
 
   // built-in functions
   edit: ({ attributes, setAttributes }) => {
-    const { title, body, titleColor, backgroundImage, bodyColor } = attributes;
+    const {
+      title,
+      body,
+      titleColor,
+      backgroundImage,
+      bodyColor,
+      overlayColor,
+      overlayOpacity,
+    } = attributes;
 
     const onChangeTitle = (newTitle) => {
       setAttributes({ title: newTitle });
@@ -56,6 +72,12 @@ registerBlockType("uzair/custom-cta", {
     };
     const onBodyColor = (newColor) => {
       setAttributes({ bodyColor: newColor });
+    };
+    const onOverlayColorChange = (newColor) => {
+      setAttributes({ overlayColor: newColor });
+    };
+    const onOverlayOpacityChange = (newOpacity) => {
+      setAttributes({ overlayOpacity: newOpacity });
     };
 
     return [
@@ -93,8 +115,26 @@ registerBlockType("uzair/custom-cta", {
                 );
               }}
             />
+            <div style={{ margin: "1rem 0" }}>
+              <p>
+                <strong>Overlay Color:</strong>
+              </p>
+              <ColorPalette
+                value={overlayColor}
+                onChange={onOverlayColorChange}
+              />
+            </div>
+            <RangeControl
+              label="Overlay Opacity"
+              value={overlayOpacity}
+              onChange={onOverlayOpacityChange}
+              min={0}
+              max={1}
+              step={0.05}
+            />
           </PanelBody>
         </InspectorControls>
+
         <div
           class="cta-container"
           style={{
@@ -106,6 +146,13 @@ registerBlockType("uzair/custom-cta", {
             borderRadius: "5px",
           }}
         >
+          <div
+            class="cta-overlay"
+            style={{
+              backgroundColor: overlayColor,
+              opacity: overlayOpacity,
+            }}
+          ></div>
           <RichText
             key="editable"
             tagName="h2"
@@ -123,12 +170,19 @@ registerBlockType("uzair/custom-cta", {
             style={{ color: bodyColor }}
           />
         </div>
-        ,
       </>,
     ];
   },
   save: ({ attributes }) => {
-    const { title, body, titleColor, backgroundImage, bodyColor } = attributes;
+    const {
+      title,
+      body,
+      titleColor,
+      backgroundImage,
+      bodyColor,
+      overlayOpacity,
+      overlayColor,
+    } = attributes;
 
     return (
       <div
@@ -142,6 +196,13 @@ registerBlockType("uzair/custom-cta", {
           borderRadius: "5px",
         }}
       >
+        <div
+          class="cta-overlay"
+          style={{
+            backgroundColor: overlayColor,
+            opacity: overlayOpacity,
+          }}
+        ></div>
         <h2 style={{ color: titleColor }}>{title}</h2>
         <RichText.Content
           tagName="p"
