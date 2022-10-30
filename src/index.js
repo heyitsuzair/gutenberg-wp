@@ -136,7 +136,7 @@ registerBlockType("uzair/custom-cta", {
         </InspectorControls>
 
         <div
-          class="cta-container"
+          className="cta-container"
           style={{
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: "cover",
@@ -147,7 +147,7 @@ registerBlockType("uzair/custom-cta", {
           }}
         >
           <div
-            class="cta-overlay"
+            className="cta-overlay"
             style={{
               backgroundColor: overlayColor,
               opacity: overlayOpacity,
@@ -186,7 +186,7 @@ registerBlockType("uzair/custom-cta", {
 
     return (
       <div
-        class="cta-container"
+        className="cta-container"
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: "cover",
@@ -197,7 +197,7 @@ registerBlockType("uzair/custom-cta", {
         }}
       >
         <div
-          class="cta-overlay"
+          className="cta-overlay"
           style={{
             backgroundColor: overlayColor,
             opacity: overlayOpacity,

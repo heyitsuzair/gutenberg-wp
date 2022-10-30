@@ -39,8 +39,11 @@ add_action('init', 'gutenberg_default_colors');
 function register_gutenberg()
 {
     wp_register_script('custom-cta-block', get_template_directory_uri() . '/build/index.js', ['wp-blocks', 'wp-editor', 'wp-components']);
+    wp_register_style('custom-cta-css', get_template_directory_uri() . '/mystyle.css', []);
     register_block_type('uzair/custom-cta', [
-        'editor_script' => 'custom-cta-block'
+        'editor_script' => 'custom-cta-block',
+        'editor_style' => '',
+        'style' => 'custom-cta-css'
     ]);
 }
 add_action('init', 'register_gutenberg');
