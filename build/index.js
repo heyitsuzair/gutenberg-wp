@@ -94,8 +94,15 @@ const {
   registerBlockType
 } = wp.blocks;
 const {
-  RichText
+  RichText,
+  InspectorControls,
+  ColorPalette,
+  MediaUpload
 } = wp.blockEditor;
+const {
+  PanelBody,
+  Button
+} = wp.components;
 registerBlockType("uzair/custom-cta", {
   // built-in attributes
   title: "Call To Action",
@@ -107,12 +114,20 @@ registerBlockType("uzair/custom-cta", {
     title: {
       type: "string",
       source: "html",
-      selector: "h3"
+      selector: "h2"
+    },
+    titleColor: {
+      type: "string",
+      default: "black"
     },
     body: {
       type: "string",
       source: "html",
       selector: "p"
+    },
+    backgroundImage: {
+      type: "string",
+      default: null
     }
   },
   // custom functions
@@ -125,13 +140,13 @@ registerBlockType("uzair/custom-cta", {
     } = _ref;
     const {
       title,
-      body
+      body,
+      titleColor,
+      backgroundImage
     } = attributes;
-    const updateAuthor = e => {
-      setAttributes({
-        author: e.target.value
-      });
-    };
+    // const updateAuthor = (e) => {
+    //   setAttributes({ author: e.target.value });
+    // };
     const onChangeTitle = newTitle => {
       setAttributes({
         title: newTitle
@@ -142,13 +157,51 @@ registerBlockType("uzair/custom-cta", {
         body: newBody
       });
     };
-    return [(0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    const onTitleColorChange = newColor => {
+      setAttributes({
+        titleColor: newColor
+      });
+    };
+    const onSelectImage = newImage => {
+      setAttributes({
+        backgroundImage: newImage.sizes.full.url
+      });
+    };
+    return [(0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(InspectorControls, {
+      style: {
+        marginBottom: "1rem"
+      }
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(PanelBody, {
+      title: "Color Settings"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Select A Title Color:")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ColorPalette, {
+      value: titleColor,
+      onChange: onTitleColorChange
+    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(PanelBody, {
+      title: "Background Image"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Select A Background Image:")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(MediaUpload, {
+      onSelect: onSelectImage,
+      type: "image",
+      value: backgroundImage,
+      render: _ref2 => {
+        let {
+          open
+        } = _ref2;
+        return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Button, {
+          onClick: open,
+          icon: "upload",
+          className: "editor-media-placeholder__button is-button is-default is-large"
+        }, "Background Image");
+      }
+    }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       class: "cta-container"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(RichText, {
       key: "editable",
       tagName: "h2",
       placeholder: "Your CTA Title",
       value: title,
+      style: {
+        color: titleColor
+      },
       onChange: onChangeTitle
     }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(RichText, {
       key: "editable",
@@ -156,19 +209,24 @@ registerBlockType("uzair/custom-cta", {
       placeholder: "Your CTA Body",
       value: body,
       onChange: onChangeBody
-    }))];
+    })), ",")];
   },
-  save: _ref2 => {
+  save: _ref3 => {
     let {
       attributes
-    } = _ref2;
+    } = _ref3;
     const {
       title,
-      body
+      body,
+      titleColor
     } = attributes;
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
       class: "cta-container"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, title), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(RichText.Content, {
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
+      style: {
+        color: titleColor
+      }
+    }, title), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(RichText.Content, {
       tagName: "p",
       value: body
     }));
