@@ -1,4 +1,5 @@
 const { registerBlockType } = wp.blocks;
+const { RichText } = wp.blockEditor;
 
 registerBlockType("uzair/custom-cta", {
   // built-in attributes
@@ -8,27 +9,58 @@ registerBlockType("uzair/custom-cta", {
   category: "text",
   // custom attributes
   attributes: {
-    author: {
+    title: {
       type: "string",
+      source: "html",
+      selector: "h3",
+    },
+    body: {
+      type: "string",
+      source: "html",
+      selector: "p",
     },
   },
   // custom functions
 
   // built-in functions
   edit: ({ attributes, setAttributes }) => {
+    const { title, body } = attributes;
     const updateAuthor = (e) => {
       setAttributes({ author: e.target.value });
     };
+    const onChangeTitle = (newTitle) => {
+      setAttributes({ title: newTitle });
+    };
+    const onChangeBody = (newBody) => {
+      setAttributes({ body: newBody });
+    };
 
-    return (
-      <input type="text" value={attributes.author} onChange={updateAuthor} />
-    );
+    return [
+      <div class="cta-container">
+        <RichText
+          key="editable"
+          tagName="h2"
+          placeholder="Your CTA Title"
+          value={title}
+          onChange={onChangeTitle}
+        />
+        <RichText
+          key="editable"
+          tagName="p"
+          placeholder="Your CTA Body"
+          value={body}
+          onChange={onChangeBody}
+        />
+      </div>,
+    ];
   },
   save: ({ attributes }) => {
+    const { title, body } = attributes;
     return (
-      <p>
-        Author Name: <i>{attributes.author}</i>
-      </p>
+      <div class="cta-container">
+        <h2>{title}</h2>
+        <RichText.Content tagName="p" value={body} />
+      </div>
     );
   },
 });
