@@ -125,6 +125,10 @@ registerBlockType("uzair/custom-cta", {
       source: "html",
       selector: "p"
     },
+    bodyColor: {
+      type: "string",
+      default: "black"
+    },
     backgroundImage: {
       type: "string",
       default: null
@@ -142,11 +146,9 @@ registerBlockType("uzair/custom-cta", {
       title,
       body,
       titleColor,
-      backgroundImage
+      backgroundImage,
+      bodyColor
     } = attributes;
-    // const updateAuthor = (e) => {
-    //   setAttributes({ author: e.target.value });
-    // };
     const onChangeTitle = newTitle => {
       setAttributes({
         title: newTitle
@@ -167,15 +169,25 @@ registerBlockType("uzair/custom-cta", {
         backgroundImage: newImage.sizes.full.url
       });
     };
+    const onBodyColor = newColor => {
+      setAttributes({
+        bodyColor: newColor
+      });
+    };
     return [(0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(InspectorControls, {
       style: {
         marginBottom: "1rem"
       }
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(PanelBody, {
-      title: "Color Settings"
+      title: "Title Color Settings"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Select A Title Color:")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ColorPalette, {
       value: titleColor,
       onChange: onTitleColorChange
+    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(PanelBody, {
+      title: "Body Color Settings"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Select A Body Color:")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ColorPalette, {
+      value: bodyColor,
+      onChange: onBodyColor
     })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(PanelBody, {
       title: "Background Image"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Select A Background Image:")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(MediaUpload, {
@@ -193,7 +205,15 @@ registerBlockType("uzair/custom-cta", {
         }, "Background Image");
       }
     }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      class: "cta-container"
+      class: "cta-container",
+      style: {
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        padding: "1rem",
+        borderRadius: "5px"
+      }
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(RichText, {
       key: "editable",
       tagName: "h2",
@@ -208,7 +228,10 @@ registerBlockType("uzair/custom-cta", {
       tagName: "p",
       placeholder: "Your CTA Body",
       value: body,
-      onChange: onChangeBody
+      onChange: onChangeBody,
+      style: {
+        color: bodyColor
+      }
     })), ",")];
   },
   save: _ref3 => {
@@ -218,17 +241,30 @@ registerBlockType("uzair/custom-cta", {
     const {
       title,
       body,
-      titleColor
+      titleColor,
+      backgroundImage,
+      bodyColor
     } = attributes;
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-      class: "cta-container"
+      class: "cta-container",
+      style: {
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        padding: "1rem",
+        borderRadius: "5px"
+      }
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", {
       style: {
         color: titleColor
       }
     }, title), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(RichText.Content, {
       tagName: "p",
-      value: body
+      value: body,
+      style: {
+        color: bodyColor
+      }
     }));
   }
 });

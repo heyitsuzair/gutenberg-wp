@@ -25,6 +25,10 @@ registerBlockType("uzair/custom-cta", {
       source: "html",
       selector: "p",
     },
+    bodyColor: {
+      type: "string",
+      default: "black",
+    },
     backgroundImage: {
       type: "string",
       default: null,
@@ -34,10 +38,8 @@ registerBlockType("uzair/custom-cta", {
 
   // built-in functions
   edit: ({ attributes, setAttributes }) => {
-    const { title, body, titleColor, backgroundImage } = attributes;
-    // const updateAuthor = (e) => {
-    //   setAttributes({ author: e.target.value });
-    // };
+    const { title, body, titleColor, backgroundImage, bodyColor } = attributes;
+
     const onChangeTitle = (newTitle) => {
       setAttributes({ title: newTitle });
     };
@@ -52,15 +54,24 @@ registerBlockType("uzair/custom-cta", {
     const onSelectImage = (newImage) => {
       setAttributes({ backgroundImage: newImage.sizes.full.url });
     };
+    const onBodyColor = (newColor) => {
+      setAttributes({ bodyColor: newColor });
+    };
 
     return [
       <>
         <InspectorControls style={{ marginBottom: "1rem" }}>
-          <PanelBody title="Color Settings">
+          <PanelBody title="Title Color Settings">
             <p>
               <strong>Select A Title Color:</strong>
             </p>
             <ColorPalette value={titleColor} onChange={onTitleColorChange} />
+          </PanelBody>
+          <PanelBody title="Body Color Settings">
+            <p>
+              <strong>Select A Body Color:</strong>
+            </p>
+            <ColorPalette value={bodyColor} onChange={onBodyColor} />
           </PanelBody>
           <PanelBody title="Background Image">
             <p>
@@ -84,7 +95,17 @@ registerBlockType("uzair/custom-cta", {
             />
           </PanelBody>
         </InspectorControls>
-        <div class="cta-container">
+        <div
+          class="cta-container"
+          style={{
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            padding: "1rem",
+            borderRadius: "5px",
+          }}
+        >
           <RichText
             key="editable"
             tagName="h2"
@@ -99,6 +120,7 @@ registerBlockType("uzair/custom-cta", {
             placeholder="Your CTA Body"
             value={body}
             onChange={onChangeBody}
+            style={{ color: bodyColor }}
           />
         </div>
         ,
@@ -106,12 +128,26 @@ registerBlockType("uzair/custom-cta", {
     ];
   },
   save: ({ attributes }) => {
-    const { title, body, titleColor } = attributes;
+    const { title, body, titleColor, backgroundImage, bodyColor } = attributes;
 
     return (
-      <div class="cta-container">
+      <div
+        class="cta-container"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          padding: "1rem",
+          borderRadius: "5px",
+        }}
+      >
         <h2 style={{ color: titleColor }}>{title}</h2>
-        <RichText.Content tagName="p" value={body} />
+        <RichText.Content
+          tagName="p"
+          value={body}
+          style={{ color: bodyColor }}
+        />
       </div>
     );
   },
