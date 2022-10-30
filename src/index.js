@@ -1,7 +1,9 @@
 const { registerBlockType } = wp.blocks;
-const { RichText, InspectorControls, ColorPalette, MediaUpload } =
+const { RichText, InspectorControls, ColorPalette, MediaUpload, InnerBlocks } =
   wp.blockEditor;
 const { PanelBody, Button, RangeControl } = wp.components;
+
+const ALLOWED_BLOCKS = ["core/button"];
 
 registerBlockType("uzair/custom-cta", {
   // built-in attributes
@@ -169,6 +171,7 @@ registerBlockType("uzair/custom-cta", {
             onChange={onChangeBody}
             style={{ color: bodyColor }}
           />
+          <InnerBlocks allowedBlocks={ALLOWED_BLOCKS} />
         </div>
       </>,
     ];
@@ -209,6 +212,7 @@ registerBlockType("uzair/custom-cta", {
           value={body}
           style={{ color: bodyColor }}
         />
+        <InnerBlocks.Content />
       </div>
     );
   },
