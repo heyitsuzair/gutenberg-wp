@@ -7,12 +7,28 @@ registerBlockType("uzair/custom-cta", {
   icon: "format-image",
   category: "text",
   // custom attributes
-  attributes: {},
+  attributes: {
+    author: {
+      type: "string",
+    },
+  },
   // custom functions
 
   // built-in functions
-  edit() {
-    return <div>no</div>;
+  edit: ({ attributes, setAttributes }) => {
+    const updateAuthor = (e) => {
+      setAttributes({ author: e.target.value });
+    };
+
+    return (
+      <input type="text" value={attributes.author} onChange={updateAuthor} />
+    );
   },
-  save() {},
+  save: ({ attributes }) => {
+    return (
+      <p>
+        Author Name: <i>{attributes.author}</i>
+      </p>
+    );
+  },
 });

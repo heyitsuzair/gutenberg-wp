@@ -100,14 +100,36 @@ registerBlockType("uzair/custom-cta", {
   icon: "format-image",
   category: "text",
   // custom attributes
-  attributes: {},
+  attributes: {
+    author: {
+      type: "string"
+    }
+  },
   // custom functions
 
   // built-in functions
-  edit() {
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "no");
+  edit: _ref => {
+    let {
+      attributes,
+      setAttributes
+    } = _ref;
+    const updateAuthor = e => {
+      setAttributes({
+        author: e.target.value
+      });
+    };
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+      type: "text",
+      value: attributes.author,
+      onChange: updateAuthor
+    });
   },
-  save() {}
+  save: _ref2 => {
+    let {
+      attributes
+    } = _ref2;
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Author Name: ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("i", null, attributes.author));
+  }
 });
 }();
 /******/ })()
