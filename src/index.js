@@ -17,7 +17,7 @@ registerBlockType("uzair/custom-cta", {
   title: "Call To Action",
   description: "Block To Generate Custom CTA",
   icon: "format-image",
-  category: "text",
+  category: "custom-uzair-category",
   // custom attributes
   attributes: {
     title: {

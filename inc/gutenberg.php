@@ -9,14 +9,14 @@ function gutenberg_default_colors()
 
     add_theme_support('editor-color-palette', [
         [
-            'name' => 'White',
-            'slug' => 'white',
-            'color' => '#ffffff'
+            'name'  => esc_attr__('White', 'twentynineteen'),
+            'slug'  => 'custom-white',
+            'color' => 'white',
         ],
         [
-            'name' => 'Red',
-            'slug' => 'red',
-            'color' => 'red'
+            'name'  => esc_attr__('Red', 'twentynineteen'),
+            'slug'  => 'custom-red',
+            'color' => 'red',
         ],
     ]);
 
@@ -30,11 +30,16 @@ function gutenberg_default_colors()
             'name' => 'Large',
             'slug' => 'large',
             'size' => 24,
-        ]
+        ],
+        [
+            'name' => 'Extra Large',
+            'slug' => 'xl',
+            'size' => 32,
+        ],
     ]);
 }
 
-add_action('init', 'gutenberg_default_colors');
+add_action('after_setup_theme', 'gutenberg_default_colors');
 
 function register_gutenberg()
 {

@@ -6852,3 +6852,23 @@ svg {
 .gallery-item > div > a:focus {
   box-shadow: 0 0 0 2px #0073aa;
 }
+
+.has-custom-red-background-color {
+  background-color: red;
+}
+
+.has-custom-white-background-color {
+  background-color: white;
+}
+
+.has-custom-red-color {
+  color: red;
+}
+
+.has-custom-white-color {
+  color: white;
+}
+
+.has-xl-font-size {
+  font-size: 32px;
+}
