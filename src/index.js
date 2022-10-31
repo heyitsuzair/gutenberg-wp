@@ -1,6 +1,13 @@
 const { registerBlockType } = wp.blocks;
-const { RichText, InspectorControls, ColorPalette, MediaUpload, InnerBlocks } =
-  wp.blockEditor;
+const {
+  RichText,
+  InspectorControls,
+  ColorPalette,
+  MediaUpload,
+  InnerBlocks,
+  BlockControls,
+  AlignmentToolbar,
+} = wp.blockEditor;
 const { PanelBody, Button, RangeControl } = wp.components;
 
 const ALLOWED_BLOCKS = ["core/button"];
@@ -27,6 +34,10 @@ registerBlockType("uzair/custom-cta", {
       source: "html",
       selector: "p",
     },
+    alignment: {
+      type: "string",
+      default: "none",
+    },
     bodyColor: {
       type: "string",
       default: "black",
@@ -51,6 +62,7 @@ registerBlockType("uzair/custom-cta", {
     const {
       title,
       body,
+      alignment,
       titleColor,
       backgroundImage,
       bodyColor,
@@ -80,6 +92,11 @@ registerBlockType("uzair/custom-cta", {
     };
     const onOverlayOpacityChange = (newOpacity) => {
       setAttributes({ overlayOpacity: newOpacity });
+    };
+    const onChangeAlignment = (newAlignment) => {
+      setAttributes({
+        alignment: newAlignment === undefined ? "none" : newAlignment,
+      });
     };
 
     return [
@@ -155,12 +172,20 @@ registerBlockType("uzair/custom-cta", {
               opacity: overlayOpacity,
             }}
           ></div>
+          {
+            <BlockControls>
+              <AlignmentToolbar
+                value={alignment}
+                onChange={onChangeAlignment}
+              />
+            </BlockControls>
+          }
           <RichText
             key="editable"
             tagName="h2"
             placeholder="Your CTA Title"
             value={title}
-            style={{ color: titleColor }}
+            style={{ color: titleColor, textAlign: alignment }}
             onChange={onChangeTitle}
           />
           <RichText
@@ -169,7 +194,7 @@ registerBlockType("uzair/custom-cta", {
             placeholder="Your CTA Body"
             value={body}
             onChange={onChangeBody}
-            style={{ color: bodyColor }}
+            style={{ color: bodyColor, textAlign: alignment }}
           />
           <InnerBlocks allowedBlocks={ALLOWED_BLOCKS} />
         </div>
@@ -185,8 +210,8 @@ registerBlockType("uzair/custom-cta", {
       bodyColor,
       overlayOpacity,
       overlayColor,
+      alignment,
     } = attributes;
-
     return (
       <div
         className="cta-container"
@@ -206,11 +231,11 @@ registerBlockType("uzair/custom-cta", {
             opacity: overlayOpacity,
           }}
         ></div>
-        <h2 style={{ color: titleColor }}>{title}</h2>
+        <h2 style={{ color: titleColor, textAlign: alignment }}>{title}</h2>
         <RichText.Content
           tagName="p"
           value={body}
-          style={{ color: bodyColor }}
+          style={{ color: bodyColor, textAlign: alignment }}
         />
         <InnerBlocks.Content />
       </div>
